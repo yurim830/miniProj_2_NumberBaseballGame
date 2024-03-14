@@ -7,6 +7,10 @@
 
 // 정답 세팅 -----------------------------------
 var answer: [Int] = []
+// 첫 번째 숫자
+answer.append(Int.random(in: 1...9))
+    
+// 2, 3번째 숫자 추가
 while answer.count < 3 {
     let temp = Int.random(in: 0...9)
     if !answer.contains(temp) {
