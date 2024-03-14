@@ -8,31 +8,34 @@
 
 
 // 프로그램 시작 ------------------------------------------
+var guessRecords: [Int] = []
 mainMenu()
 
 // ** 메인 메뉴 **
 func mainMenu() {
-    print("""
-      환영합니다! 원하시는 번호를 입력해주세요.
-      1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기
-""")
+    print("환영합니다! 원하시는 번호를 입력해주세요.")
+    print("1. 게임 시작하기  2. 게임 기록 보기  3. 종료하기")
     
     if let menu = readLine() {
         if menu == "1" {            // 게임 시작하기
-            gameStart()
+            if let guessCount = gameStart() {
+                guessRecords.append(guessCount)
+            }
+            mainMenu()
         } else if menu == "2" {     // 게임 기록 보기
             viewRecords()
         } else if menu == "3" {     // 종료하기
             quit()
         } else {
             print("1, 2, 3 중에서 입력해주세요.")
+            mainMenu()
         }
     }
 }
 // =============================================================================
 //  ** 1. 게임 시작하기 **
 
-func gameStart () {
+func gameStart () -> Int? {
     // ----------- 정답 세팅 -----------
     var answer: [Int] = []
     // 첫 번째 숫자
@@ -50,6 +53,7 @@ func gameStart () {
     
     // ----------- 숫자 맞히기 시작 -----------
     print("< 게임을 시작합니다 >")
+    var guessCount: Int = 0
     
     while true {
         var ball: Int = 0
@@ -60,6 +64,7 @@ func gameStart () {
         var arrInput: [Int] = []
         
         if let input = readLine() {
+            guessCount += 1
             if Int(input) == nil || input.count > 3 {   // 숫자가 아니거나, 길이가 3 이상일 때
                 print("올바르지 않은 입력값입니다\n")
                 
@@ -80,7 +85,7 @@ func gameStart () {
                     // 비교 결과 출력 & 게임 종료
                     if strike == 3 {
                         print("정답입니다!")
-                        break
+                        return guessCount
                     }
                     if strike > 0 && ball > 0 {
                         print("\(strike)스트라이크 \(ball)볼")
@@ -98,16 +103,18 @@ func gameStart () {
         
         
     }
-    mainMenu()
 }
 
 
 // 게임 기록 보기 ---------------------------------------------
 func viewRecords() {
-    
+    print("< 게임 기록 보기 >")
+    for (round, guess) in guessRecords.enumerated() {
+        print("\(round + 1)번째 게임 : 시도 횟수 - \(guess)")
+    }
+    print("==============================\n")
+    mainMenu()
 }
-
-
 
 
 // 게임 종료하기 ------------------------------------------------
