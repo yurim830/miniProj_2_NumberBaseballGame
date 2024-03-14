@@ -109,6 +109,7 @@ func gameStart () -> Int? {
 
 // 게임 기록 보기 ---------------------------------------------
 func viewRecords() {
+    print("==============================")
     print("< 게임 기록 보기 >")
     for (round, guess) in guessRecords.enumerated() {
         print("\(round + 1)번째 게임 : 시도 횟수 - \(guess)")
@@ -120,5 +121,5 @@ func viewRecords() {
 
 // 게임 종료하기 ------------------------------------------------
 func quit() {
-    
+    print("< 숫자 야구 게임을 종료합니다 > ")
 }
